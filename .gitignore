@@ -1,0 +1,35 @@
+# Node
+node_modules/
+.next/
+.vercel/
+*.tsbuildinfo
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+.mypy_cache/
+.pytest_cache/
+
+# Env
+.env
+.env.local
+.env.*.local
+backend/secrets/*.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.dockerignore
+
+# IDE
+.idea/
+.vscode/
+*.swp

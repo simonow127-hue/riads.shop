@@ -1,0 +1,21 @@
+services:
+  riads_database:
+    image: postgres:16-alpine
+    container_name: riads_database
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: riads
+      POSTGRES_PASSWORD: riads
+      POSTGRES_DB: riads
+    ports:
+      - "5432:5432"
+    volumes:
+      - riads_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riads -d riads"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  riads_pg_data:
