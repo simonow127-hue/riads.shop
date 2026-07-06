@@ -46,10 +46,22 @@ function getSpreadsheet_() {
   return SpreadsheetApp.openById(SPREADSHEET_ID);
 }
 
+function formatPrice_(value, currency) {
+  if (value === null || value === undefined || value === '') return '';
+  var text = String(value).trim();
+  if (/[A-Za-z\u0600-\u06FF]/.test(text)) return text;
+  var n = Number(value);
+  if (isNaN(n)) return text;
+  var code = String(currency || 'SAR').trim() || 'SAR';
+  return String(Math.round(n)) + ' ' + code;
+}
+
 function buildRow_(data, orderid) {
   var product = data.product || '';
   var note = orderid;
   if (product) note = orderid + ' | ' + product;
+
+  var rawPrice = data.total_price != null ? data.total_price : (data.total_mad != null ? data.total_mad : '');
 
   return [
     data.date || '',
@@ -58,7 +70,7 @@ function buildRow_(data, orderid) {
     data.country || data.address || 'Morocco',
     data.sku || '',
     data.quantity || data.qte || '',
-    data.total_price != null ? data.total_price : (data.total_mad != null ? data.total_mad : ''),
+    formatPrice_(rawPrice, data.currency || 'SAR'),
     note
   ];
 }
