@@ -56,6 +56,16 @@ function formatPrice_(value, currency) {
   return String(Math.round(n)) + ' ' + code;
 }
 
+function formatPhone_(value) {
+  if (value === null || value === undefined) return '';
+  var text = String(value).trim();
+  if (!text) return '';
+  if (text.charAt(0) === '+' || text.charAt(0) === '=') {
+    return text.substring(1);
+  }
+  return text;
+}
+
 function buildRow_(data, orderid) {
   var product = data.product || '';
   var note = orderid;
@@ -66,7 +76,7 @@ function buildRow_(data, orderid) {
   return [
     data.date || '',
     data.name || data.customer_name || '',
-    data.phone || data.phone_raw || '',
+    formatPhone_(data.phone || data.phone_raw || data.phone_e164 || ''),
     data.country || data.address || 'Morocco',
     data.sku || '',
     data.quantity || data.qte || '',
